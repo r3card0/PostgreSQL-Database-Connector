@@ -1,6 +1,6 @@
 # PostgreSQL Database Connector
 
-A lightweight Python toolkit for connecting to PostgreSQL databases and executing SQL queries directly from Jupyter Notebooks. This repository provides a simple, cross-platform solution for database operations with minimal configuration.
+A lightweight Python toolkit for connecting to PostgreSQL and AWS-Redshift databases and executing SQL queries directly from Jupyter Notebooks. This repository provides a simple, cross-platform solution for database operations with minimal configuration.
 
 ## Overview
 
@@ -29,7 +29,7 @@ pip install psycopg2-binary pandas configparser
 ### Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/postgres-connector.git
+git clone https://github.com/r3card0/postgres-connector.git
 cd postgres-connector
 ```
 
@@ -54,19 +54,19 @@ Reads database connection parameters from an `.ini` configuration file.
 **Example config.ini file:**
 ```ini
 [postgresql]
+user = postgres
+password = mypassword
 host = localhost
 port = 5432
 database = mydb
-user = postgres
-password = mypassword
 ```
 
 **Usage:**
 ```python
-from config_parser import DBConfigParser
+from config_parser import PostgreSQLConfigReader
 
-parser = DBConfigParser('/path/to/config.ini')
-db_params = parser.get_connection_params()
+parser = PostgreSQLConfigReader('/path/to/config.ini')
+db_params = parser.config()
 # Returns: {'host': 'localhost', 'port': 5432, 'database': 'mydb', ...}
 ```
 
@@ -78,7 +78,7 @@ Establishes connection to PostgreSQL database using the parameters dictionary.
 from db_connector import DatabaseConnector
 
 connector = DatabaseConnector(db_params)
-connection = connector.connect()
+connection = connector.connectdb()
 ```
 
 ### 4. QueryExecutor Class
@@ -86,16 +86,19 @@ connection = connector.connect()
 Executes SQL queries and returns results as pandas DataFrames.
 
 ```python
-from query_executor import QueryExecutor
+from create_df_query import CreateDataframe
 
-executor = QueryExecutor(connection)
+executor = CreateDataframe(query,connection)
+df = executor.get_dataframe()
 
 # Option 1: Execute from SQL file
-df = executor.execute_from_file('/path/to/query.sql')
+executor = CreateDataframe('/path/to/query.sql',connection)
+df = executor.get_dataframe()
 
 # Option 2: Execute from string variable
 sql_query = "SELECT * FROM users WHERE active = true"
-df = executor.execute_from_string(sql_query)
+executor = CreateDataframe(sql_query,connection)
+df = executor.get_dataframe()
 ```
 
 ## Complete Workflow Example
@@ -103,29 +106,24 @@ df = executor.execute_from_string(sql_query)
 ### In a Jupyter Notebook:
 
 ```python
-# Import all classes
-from path_converter import PathConverter
-from config_parser import DBConfigParser
-from db_connector import DatabaseConnector
-from query_executor import QueryExecutor
+# Import 
+import sys
+from pathlib import Path
 
-# Step 1: Convert path if needed (optional)
-converter = PathConverter()
-config_path = converter.convert_path("C:\\config\\database.ini")
+# Add the parent folder of Python to the path
+parent_folder = Path.cwd().parent  # Move up one directory from notebooks/
+sys.path.insert(0, str(parent_folder))
 
-# Step 2: Parse connection parameters
-parser = DBConfigParser(config_path)
-db_params = parser.get_connection_params()
+from utils.create_df_query import CreateDataframe
 
-# Step 3: Connect to database
-connector = DatabaseConnector(db_params)
-connection = connector.connect()
+# Inputs
+# database file connection
+db_connection = r"c:\Users\friday\setup\database.ini"
+# SQL query from file
+employees_query = r"c:\Users\friday\sql\employees_stats.sql"
 
-# Step 4: Execute query and get DataFrame
-executor = QueryExecutor(connection)
-
-# From file
-df = executor.execute_from_file('/path/to/analytics_query.sql')
+# Run Process From file
+df = CreateDataframe(employees_query,db_connection).get_dataframe()
 
 # Or from string
 query = """
@@ -137,36 +135,26 @@ FROM orders
 WHERE order_date >= '2024-01-01'
 GROUP BY customer_id
 """
-df = executor.execute_from_string(query)
+df = CreateDataframe(query,db_connection).get_dataframe()
 
 # Analyze your data
 print(df.head())
 df.describe()
-
-# Don't forget to close the connection when done
-connection.close()
 ```
 
-## Quick Start Template
+You will see following messages:
 
-Save this template in your Jupyter Notebook:
-
-```python
-# Configuration
-CONFIG_FILE = '/path/to/your/config.ini'
-SQL_FILE = '/path/to/your/query.sql'  # or None if using string
-
-# Initialize
-from postgres_connector import PostgresConnector
-
-connector = PostgresConnector(CONFIG_FILE)
-df = connector.query_to_dataframe(sql_file=SQL_FILE)
-# or
-# df = connector.query_to_dataframe(sql_string="SELECT * FROM table")
-
-print(f"Retrieved {len(df)} rows")
-df.head()
+```bash
+Database connection established sucessfully.
+The SQL query source is a variable
+Creating the dataframe
+Dataframe successfully created.
+Database closed successfully.
 ```
+
+The process closes database connection automatically.
+
+
 
 ## Configuration File Structure
 
@@ -174,11 +162,11 @@ Your `.ini` file must follow this structure:
 
 ```ini
 [postgresql]
-host = your_host
-port = 5432
-database = your_database
 user = your_username
 password = your_password
+host = your_corporate_host
+port = 5432
+database = your_database
 ```
 
 **Security Note**: Never commit `.ini` files containing credentials to version control. Add them to your `.gitignore`.
@@ -192,7 +180,7 @@ ConfigParser → dict(connection_params)
     ↓
 DatabaseConnector → connection
     ↓
-QueryExecutor → pandas.DataFrame
+CreateDataframe → pandas.DataFrame
 ```
 
 ## Error Handling
