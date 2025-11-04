@@ -29,8 +29,7 @@ pip install psycopg2-binary pandas configparser
 ### Clone the Repository
 
 ```bash
-git clone https://github.com/r3card0/postgres-connector.git
-cd postgres-connector
+git clone https://github.com/r3card0/PostgreSQL-Database-Connector.git
 ```
 
 ## Usage
