@@ -1,3 +1,7 @@
 /testing
 /notebooks/.ipynb_checkpoints
-/utils/__pycache__/
+/utils
+/venv_test
+/src/postgres_database_connector.egg-info
+/src/postgresql_database_connector/__pycache__
+
