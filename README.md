@@ -1,5 +1,7 @@
 # PostgreSQL Database Connector
 
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+
 A lightweight Python toolkit for connecting to PostgreSQL and AWS-Redshift databases and executing SQL queries directly in notebooks or Python scripts. This repository provides a simple, cross-platform solution for database operations with minimal configuration.
 
 ## Overview
