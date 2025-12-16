@@ -5,3 +5,8 @@
 /src/postgres_database_connector.egg-info
 /src/postgresql_database_connector/__pycache__
 requirements.txt
+dist/
+build/
+*.egg-info/
+.venv/
+/temp_extract

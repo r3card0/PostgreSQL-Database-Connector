@@ -24,12 +24,11 @@ dependencies = [
     "tzdata>=2025.3"
 ]
 
-license = { file = "LICENSE" }
+license = { file = "MIT License" }
 
 classifiers = [
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.10",
-    "License :: OSI Approved :: MIT License",
 ]
 
 [project.urls]
