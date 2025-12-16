@@ -1,10 +1,13 @@
-# PostgreSQL Database Connector
+# 🔌PostgreSQL Database Connector
 
 ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Pandas](https://img.shields.io/badge/Pandas-fbec5d?style=for-the-badge&logo=pandas&logoColor=blue) 
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
+![Redshift](https://img.shields.io/badge/AWS%20Redshift-232F3E?style=for-the-badge&logo=amazonredshift&logoColor=white)
 
 A lightweight Python toolkit for connecting to PostgreSQL and AWS-Redshift databases and executing SQL queries directly in notebooks or Python scripts. This repository provides a simple, cross-platform solution for database operations with minimal configuration.
 
-## Overview
+## 🧭 Overview
 
 This toolkit consists of:
 1. Handle cross-platform file paths (Windows/Linux)
@@ -12,7 +15,7 @@ This toolkit consists of:
 3. Establish PostgreSQL and AWS Redshift databases connections
 4. Execute SQL queries and return results as pandas DataFrames
 
-## Key Features
+## 🛠️ Key Features
 
 - **Cross-platform compatibility**: Automatically converts Windows paths to Linux format
 - **Configuration-based connections**: Store connection details securely in `.ini` files
@@ -20,17 +23,18 @@ This toolkit consists of:
 - **Jupyter Notebook ready**: Designed for seamless integration with data science workflows
 - **Pandas integration**: Returns query results as DataFrames for immediate analysis
 
-## Installation
+## ⚙️ Installation
 
 ### Prerequisites
 
-* Python 3.10
+* Python 3.10 or higher
 * Access to a PostreSQL database
 * Access to a AWS Redshift database
+* File `.ini` with connection parameters
 
 You can use this repository in two different ways:
 
-1. Clone the repository
+### 1. Clone the repository
 
     Follows the steps below to clone and work directly with the source code
 
@@ -39,37 +43,54 @@ You can use this repository in two different ways:
     git clone https://github.com/r3card0/PostgreSQL-Database-Connector.git
     ```
 
-2. Install as a dependency
+### 2. Create a Python Virtual Environment
 
-    Alternatively, you can install this repository as a dependency within your own project:
+> ⚠️ Make sure you are using a WSL (Window Subsystem for Linux) terminal to run the package installation commands.
 
-    1. Create a Python virtual environment
+In a WSL terminal, run the following process
 
-        ```python
-        python3 -m venv <virtual_env_name>
+1. Create a virtual environment. Select the virtual environment's name; e.g. *venv_process* 
+
+    ```bash
+    python3 -m venv venv_process
+    ```
+
+2. Activate the virtual environment:
+
+    ```bash
+    source venv_process/bin/activate
+    ```
+
+### 3. 📦 Install PostgreSQL Database Connector Dependency
+
+Once the virtual environment is installed and activated, install PostgreSQL Database Connector dependency by executing the following command:
+
+```
+pip install git+https://github.com/r3card0/PostgreSQL-Database-Connector.git@v0.1.0
+```
         ```
 
-    2. Activate virtual environment
-        
-        ```python
-        source <virtual_env_name>/bin/activate
-        ```
+## ⚡ Class Methods
 
-    3. Install libraries and dependencies using the [requirements.txt](/requirements.txt) file.
+|Class Method|Objective|Parameter(s)|Result(s)|
+|-|-|-|-|
+|`read_sql_file()`|Reads the SQL script comming from a file or from a variable and returns it as string| SQL script from a file or from a varible|Return a string. `str` : `SELECT * FROM employees;`|
+|`build_dataframe()`|Creates dataframe from SQL query. Make connection with PostgreSQL or AWS-Redshift database|SQL query| Dataframe of pandas|
 
-        ```python
-        pip install -r requirements.txt
-        ```
+## Versions
 
-        or install manually with `pip`
+|Version|Description|
+|-|-|
+|**v0.1.0**|Initial version|
 
-        ```python
-        pip install git+https://github.com/r3card0/PostgreSQL-Database-Connector.git@v0.1.0
-        ```
+- Initial release
+- INI-based configuration parsing
+- PostgreSQL and AWS Redshift connection management
+- SQL query execution with DataFrame output
 
-## Usage
+## 🚗 Usage
 
-Basic example
+**Basic Example**
 
 ```python
 from postgresql_database_connector import SQLDataFrameBuilder
@@ -108,7 +129,7 @@ Database connection established sucessfully.
 SQL query source: variable string
 Creating dataframe ...
 Dataframe successfully created
-Result: 5 records extracted and 1 columns
+Result: 5 records and 1 column(s) extracted
 Database closed successfully.
 ```
 
@@ -131,19 +152,7 @@ database = your_database
 
 ## Libraries and dependencies
 
-Install libraries and dependencies into the virtual environment using the [requirements.txt](/requirements.txt) file or install manually with `pip` command
-
-```bash
-pip install psycopg2-binary pandas configparser
-```
-
-Install `path_converter` dependency as well:
-
-```bash
-pip install git+https://github.com/r3card0/WSL-path-converter.git@v0.1.0 
-```
-
-Learn more about [Path Converter](https://github.com/r3card0/WSL-path-converter/blob/main/README.md) dependency
+This solution uses Path Converter dependency which helps to convert Windows path to WSL path. Learn more about [Path Converter](https://github.com/r3card0/WSL-path-converter/blob/main/README.md) dependency
 
 
 
@@ -154,27 +163,50 @@ The class includes basic error handling:
 - Connection failures will raise `psycopg2.OperationalError`
 - Invalid SQL syntax will raise `psycopg2.ProgrammingError`
 
-## Contributing
+
+## 🤝 Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
-## License
+1. Fork the repository
+2. Create your feature branch
+3. Commit your changes
+4. Push to the branch
+5. Open a Pull Request
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+## 📃License
 
-## Support
+This project is licensed under the MIT License
 
-For issues or questions, please open an issue on GitHub.
+## 🚀 Project Motivation
 
-## Changelog
+* This project was created as a practical solution to avoid reprocessing during data preparation
+* Build a reusable foundation that connects SQL and pandas in a clear and maintainable way
+* Make life easier by automating repetitive data extraction tasks, allowing greater focus on interpretation
+* Support both quick analyses and larger projects
 
-### Version 0.1.0
-- Initial release
-- INI-based configuration parsing
-- PostgreSQL and AWS Redshift connection management
-- SQL query execution with DataFrame output
+## 🔗 References
+**psycopg**
 
-## Author
-[r3card0](https://github.com/r3card0)
+* [psycopg.org - documentation](https://www.psycopg.org/docs/)
 
-Project Links: https://github.com/r3card0/PostgreSQL-Database-Connector
+**configparser**
+* [Python.org - configparser](https://docs.python.org/3/library/configparser.html)
+
+**Pandas**
+
+* [Pandas - DataFrame](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html#pandas.DataFrame)
+* [Pandas - read_sql_query](https://pandas.pydata.org/docs/reference/api/pandas.read_sql_query.html)
+
+**pyproject.toml file**
+
+* [SetUpTools - Configuring setuptools using pyproject.toml files](https://setuptools.pypa.io/en/latest/userguide/pyproject_config.html)
+* [SetUpTools - Package Discovery](https://setuptools.pypa.io/en/latest/userguide/package_discovery.html)
+* [Python Packaging User Guide - Writting your pyproject.toml](https://packaging.python.org/en/latest/guides/writing-pyproject-toml/)
+* [Python Packaging User Guide - src layout vs flat layout](https://packaging.python.org/en/latest/discussions/src-layout-vs-flat-layout/)
+* [Rogger van der Geer - An Updated Guide to Setuptools and Pyproject.toml](https://xebia.com/blog/an-updated-guide-to-setuptools-and-pyproject-toml/)
+
+# 👤 Author
+
+* GitHub: [r3card0](https://github.com/r3card0)
+* LinkedIn: [Ricardo](https://www.linkedin.com/in/ricardordzsaldivar/)

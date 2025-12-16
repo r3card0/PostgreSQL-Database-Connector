@@ -1,5 +1,0 @@
-psycopg2-binary 
-pandas 
-configparser
-git+https://github.com/r3card0/WSL-path-converter.git@v0.1.0
-git+https://github.com/r3card0/PostgreSQL-Database-Connector.git@v0.1.0

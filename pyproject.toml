@@ -13,5 +13,31 @@ authors = [
     {name = "r3card0", email = "ricardo.rdz@protonmail.com"}
 ]
 
+dependencies = [
+    "numpy>=2.2.6",
+    "pandas>=2.3.3",
+    "path-converter @ git+https://github.com/r3card0/WSL-path-converter.git@v0.1.0",
+    "psycopg2-binary>=2.9.11",
+    "python-dateutil>=2.9.0.post0",
+    "pytz>=2025.2",
+    "six>=1.17.0",
+    "tzdata>=2025.3"
+]
+
+license = { file = "LICENSE" }
+
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "License :: OSI Approved :: MIT License",
+]
+
+[project.urls]
+Homepage = "https://github.com/r3card0/PostgreSQL-Database-Connector"
+Repository = "https://github.com/r3card0/PostgreSQL-Database-Connector"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
 [tool.setuptools.packages.find]
 where = ["src"]
