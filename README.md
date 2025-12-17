@@ -32,18 +32,7 @@ This toolkit consists of:
 * Access to a AWS Redshift database
 * File `.ini` with connection parameters
 
-You can use this repository in two different ways:
-
-### 1. Clone the repository
-
-    Follows the steps below to clone and work directly with the source code
-
-    Clone repository
-    ```bash
-    git clone https://github.com/r3card0/PostgreSQL-Database-Connector.git
-    ```
-
-### 2. Create a Python Virtual Environment
+### 1. Create a Python Virtual Environment
 
 > ⚠️ Make sure you are using a WSL (Window Subsystem for Linux) terminal to run the package installation commands.
 
@@ -63,12 +52,23 @@ In a WSL terminal, run the following process
 
 ### 3. 📦 Install PostgreSQL Database Connector Dependency
 
-Once the virtual environment is installed and activated, install PostgreSQL Database Connector dependency by executing the following command:
+Once the virtual environment is installed and activated, install PostgreSQL Database Connector from the latest release: 
 
+```bash
+pip install https://github.com/r3card0/PostgreSQL-Database-Connector/releases/download/v0.1.0/postgres_database_connector-0.1.0-py3-none-any.whl
 ```
-pip install git+https://github.com/r3card0/PostgreSQL-Database-Connector.git@v0.1.0
+
+#### Add to requirements.txt
+```txt
+postgres-database-connector @ https://github.com/r3card0/PostgreSQL-Database-Connector/releases/download/v0.1.0/postgres_database_connector-0.1.0-py3-none-any.whl
 ```
-        ```
+
+#### Add to pyproject.toml
+```toml
+dependencies = [
+    "postgres-database-connector @ https://github.com/r3card0/PostgreSQL-Database-Connector/releases/download/v0.1.0/postgres_database_connector-0.1.0-py3-none-any.whl"
+]
+```
 
 ## ⚡ Class Methods
 
